@@ -12,10 +12,10 @@ body {
 
 /* Style Header */
 .header {
-    padding: 30px;
+    padding: 10px 30px;
     text-align: center;
     background-color: #ffffff;
-    background-image: url("../../images/titleback_red.jpg");
+    background-image: url("../../images/titleback_red_1.jpg");
     background-size: cover;
     color: black;
 }
