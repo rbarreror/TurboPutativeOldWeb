@@ -20,7 +20,7 @@
             div.description {
                 /*background-color: white;*/
                 /*background-image: linear-gradient(to bottom right, rgba(0, 195, 255, 0.185), rgba(0, 195, 255, 0.001));*/
-                background-image: url("images/description.jpg");
+                background-image: url("images/description3_mod.jpg");
                 background-size: cover;
                 height: 250px;
                 overflow: auto;
@@ -49,22 +49,26 @@
                 text-align: center;
             }
 
-
             #tryTitle h2 {
                 text-align: center;
             }
 
             #tryRef a {
+                display: inline-block;
+                position: relative;
+                top: -20px;
                 text-align: center;
                 text-decoration: none;
                 padding: 20px 40px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 background-color: #4CAF50;
                 color: white;
+                transition: 1s;
             }
 
             #tryRef a:hover {
                 background-color: #204922;
+                transform: scale(1.1, 1.1);
             }
 
             div.main:after {
@@ -83,14 +87,16 @@
             <!--<div style="float:left;">
                 <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
             </div> -->
-            <h1>TurboPutative</h1>
+            <a href="index.html">
+                <h1>TurboPutative</h1>
+            </a>
         </div>
 
         <!-- Navigation bar -->
         <div class="nav">
             <a class="active" href="">Home</a>
-            <a href="">Modules</a>
-            <a href="">Settings</a>
+            <a href="modules.html">Modules</a>
+            <a href='settings.html'>Settings</a>
             <a href="turboputative.html">TurboPutative</a>
             <a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a>
         </div>
@@ -102,11 +108,12 @@
                 <p id="introduction">TurboPutative is a program made up of a set of tools that automate and streamline 
                     the processing of tables with putative annotations, that is, of tables that in each 
                     row assign a candidate metabolite to the signals detected by the mass spectrometer (feature). 
-                    The function of each tool is explained in <a href="#Modules">Modules</a> section.
+                    The function of each tool is explained in <a href="modules.html" style="text-decoration:none; color:darkblue;">Modules</a> section.
                 </p>
             </div>
+                
             <div class="try">
-                <div id="tryYitle">
+                <div id="tryTitle">
                     <h2>Design customized workflow</h2>
                 </div>
                 <div id="tryRef">

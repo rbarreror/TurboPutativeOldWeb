@@ -103,7 +103,7 @@
             }
 
             label {
-                padding: 12px 12px 12px 0;
+                padding: 12px 0px 12px 0;
                 display: inline-block;
             }
 
@@ -112,6 +112,44 @@
                 width: 25%;
                 margin-top: 6px;
                 font-weight: bold;
+            }
+
+            .tooltip {
+                position: relative;
+            }
+
+            .icon {
+                font-size: 0.8em;
+            }
+
+            .tooltipText {
+                position: absolute;
+                top: 10px;
+                left: 105%;
+                display: inline-block;
+                width: max-content;
+                visibility: hidden;
+                background-color: black;
+                color: white;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 8px;
+                font-size: 0.8em;
+                z-index: 1;
+            }
+
+            .tooltip:hover .tooltipText {
+                visibility: visible;
+            }
+
+            .tooltip .tooltipText::after {
+                content: "";
+                position: absolute;
+                right: 100%;
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent black transparent transparent;
+                margin-top: 2.5px;
             }
 
             .enter {
@@ -156,14 +194,19 @@
 
         <!-- Header-->
         <div class="header">
-            <h1>TurboPutative</h1>
+            <!--<div style="float:left;">
+                <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
+            </div> -->
+            <a href="index.html">
+                <h1>TurboPutative</h1>
+            </a>
         </div>
 
         <!-- Navigation bar -->
         <div class="nav">
             <a href="index.html">Home</a>
-            <a href="">Modules</a>
-            <a href="">Settings</a>
+            <a href="modules.html">Modules</a>
+            <a href="settings.html">Settings</a>
             <a class="active" href="">TurboPutative</a>
             <a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a>
         </div>
@@ -191,18 +234,27 @@
             <div id="formTitle">
                 <h2 style="font-size: 2em;">Settings</h2>
             </div>
-            <form action="#" method="POST" enctype="multipart/form-data" id="myForm">
-                <div class="formContainer">
+            <div class="formContainer">
+
+                <!-- Real Form -->
+                <form action="#" method="POST" enctype="multipart/form-data" id="myForm">
+
+                    <!-- Visible input (file) -->
                     <div style="padding: 40px 20px;" class="formModule">
                         <div class="row">
                             <div class="label">
                                 <label for="inputFile">Import input file</label>
                             </div>
-                            <div class="enter">
+                            <div class="enter" style="width:35%;">
                                 <input type="file" name="inputFile" id="inputFile">
+                            </div>
+                            <div style="float: left; margin-top:5px; padding: 6px;">
+                                <a href="assets/files/MS_experiment.xls" download="Example.xls" style="text-decoration: none; color: darkblue;">Download example file</a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Hidden inputs -->
                     <div class="formModule" id="metaParam" style="display: none;">
                         <input type="text" id="workflow" name="workflow">
                         <input type="text" id="jobID" name="jobID">
@@ -212,178 +264,204 @@
                         <input type="textarea" id="FeatureInfoParams" name="FeatureInfoParams">
                         <input type="submit" id="mySubmit">
                     </div>
-            </form>
-                    <div class="formModule" id="formTagger">
-                        <h3>Tagger settings</h3>
-                        <div id="tagSelection">
-                            <span class=paramName style="display:block; font-weight: bold; margin-bottom: 10px;">Tag Selection</span>
-                            <div class="check">
-                                <input type="checkbox" id="Food" name="Food" value="True">
-                                <label for="Food"> Food</label>
-                            </div>
-                            <div class="check">
-                                <input type="checkbox" id="Drug" name="Drug" value="True">
-                                <label for="Drug"> Drug</label>
-                            </div>
-                            <div class="check">
-                                <input type="checkbox" id="MicrobialCompound" name="MicrobialCompound" value="True">
-                                <label for="MicrobialCompound"> Microbial Compound</label><br>
-                            </div>
-                            <div class="check">
-                                <input type="checkbox" id="Halogenated" name="Halogenated" value="True">
-                                <label for="Halogenated"> Halogenated</label>                         
-                            </div>
-                        </div><br>
-                        <div id="TaggerParam">
-                            <div class="row">
-                                <div class="label">
-                                    <label for="HalogenatedRegex">HalogenatedRegex</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="HalogenatedRegex" id="HalogenatedRegex" value="([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="label">
-                                    <label for="Tagger_OutputName">Output name</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="Tagger_OutputName" id="Tagger_OutputName" placeholder="Optional">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="label">
-                                    <label for="Tagger_OutputColumns">Output columns</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="Tagger_OutputColumns" id="Tagger_OutputColumns" placeholder="Optional">
-                                </div>
-                            </div>
+                </form>
+
+                <!-- Ficticious inputs (visible) -->
+                <div class="formModule" id="formTagger">
+                    <h3>Tagger settings</h3>
+                    <div id="tagSelection">
+                        <span class=paramName style="display:block; font-weight: bold; margin-bottom: 10px;">Tag Selection</span>
+                        <div class="check">
+                            <input type="checkbox" id="Food" name="Food" value="True">
+                            <label for="Food"> Food</label>
                         </div>
-                    </div>
-                    <div class="formModule" id="formMod">
-                        <h3>Mod settings</h3>
-                        <div class="ModParam">
-                            <div class="row">
-                                <div class="label">
-                                    <label for="RemoveRow">Remove Row Regex</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="RemoveRow" id="RemoveRow" value="(?i)No compounds found for experimental mass">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="label">
-                                    <label for="Separator">Separator</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="Separator" id="Separator" value="\s/\s">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="label">
-                                    <label for="AminoAcidSeparator">Aminoacid Separator</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="AminoAcidSeparator" id="AminoAcidSeparator" value="\s">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="label">
-                                    <label for="Mod_OutputName">Output name</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="Mod_OutputName" id="Mod_OutputName" placeholder="Optional">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="label">
-                                    <label for="Mod_OutputColumns">Output columns</label>
-                                </div>
-                                <div class="enter">
-                                    <input type="text" name="Mod_OutputColumns" id="Mod_OutputColumns" placeholder="Optional">
-                                </div>
-                            </div>
+                        <div class="check">
+                            <input type="checkbox" id="Drug" name="Drug" value="True">
+                            <label for="Drug"> Drug</label>
                         </div>
-                    </div>
-                    <div class="formModule" id="formTable">
-                        <h3>Table settings</h3>
+                        <div class="check">
+                            <input type="checkbox" id="NaturalProduct" name="NaturalProduct" value="True">
+                            <label for="NaturalProduct"> Natural Product</label>                         
+                        </div>
+                        <div class="check">
+                            <input type="checkbox" id="MicrobialCompound" name="MicrobialCompound" value="True">
+                            <label for="MicrobialCompound"> Microbial Compound</label><br>
+                        </div>
+                        <div class="check">
+                            <input type="checkbox" id="Halogenated" name="Halogenated" value="True">
+                            <label for="Halogenated"> Halogenated</label>                         
+                        </div>
+                    </div><br>
+                    <div id="TaggerParam">
                         <div class="row">
                             <div class="label">
-                                <label for="ComparedColumns">Compared columns (Index/Name)</label>
+                                <label class="tooltip" for="HalogenatedRegex">HalogenatedRegex <span class="icon">&#9432</span>
+                                    <span class="tooltipText">Regular expression that matches the name of halogenated compounds</span>
+                                </label>
                             </div>
                             <div class="enter">
-                                <input type="text" name="ComparedColumns" id="ComparedColumns" placeholder="Default: 1, 3, 4, 5, 7, 8, 9">
+                                <input type="text" name="HalogenatedRegex" id="HalogenatedRegex" value="([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)">
                             </div>
                         </div>
                         <div class="row">
                             <div class="label">
-                                <label for="ConservedColumns">Conserved columns (Index/Name)</label>
+                                <label for="Tagger_OutputName">Output name</label>
                             </div>
                             <div class="enter">
-                                <input type="text" name="ConservedColumns" id="ConservedColumns" placeholder="Default: 2, 6">
+                                <input type="text" name="Tagger_OutputName" id="Tagger_OutputName" placeholder="Optional">
                             </div>
                         </div>
                         <div class="row">
                             <div class="label">
-                                <label for="Table_OutputName">Output name</label>
+                                <label for="Tagger_OutputColumns">Output columns</label>
                             </div>
                             <div class="enter">
-                                <input type="text" name="Table_OutputName" id="Table_OutputName" placeholder="Optional">
+                                <input type="text" name="Tagger_OutputColumns" id="Tagger_OutputColumns" placeholder="Optional">
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="label">
-                                <label for="Table_OutputColumns">Output columns</label>
-                            </div>
-                            <div class="enter">
-                                <input type="text" name="Table_OutputColumns" id="Table_OutputColumns" placeholder="Optional">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="formModule" id="formFeatureInfo">
-                        <h3>FeatureInfo settings</h3>
-                        <div class="row">
-                            <div class="label">
-                                <label for="N_Digits">Decimal places</label>
-                            </div>
-                            <div class="enter">
-                                <input type="text" name="N_Digits" id="N_Digits" value=4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="label">
-                                <label for="FeatureInfo_OutputName">Output name</label>
-                            </div>
-                            <div class="enter">
-                                <input type="text" name="FeatureInfo_OutputName" id="FeatureInfo_OutputName" placeholder="Optional">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="label">
-                                <label for="FeatureInfo_OutputColumns">Output columns</label>
-                            </div>
-                            <div class="enter">
-                                <input type="text" name="FeatureInfo_OutputColumns" id="FeatureInfo_OutputColumns" placeholder="Optional">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="label">
-                                <label for="FeatureInfo_file">Feature info file</label>
-                            </div>
-                            <div class="enter">
-                                <input type="file" name="FeatureInfo_file" id="FeatureInfo_file">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="formModule">
-                        <div id="send">
-                            <button type="button" name="submit" onclick="sendJob()">TurboPutative</button>
-                            <p id="errorFile" style="display: none; color: red;"></p>
                         </div>
                     </div>
                 </div>
-            <!--</form>-->
+
+                <div class="formModule" id="formMod">
+                    <h3>Mod settings</h3>
+                    <div class="ModParam">
+                        <div class="row">
+                            <div class="label">
+                                <label class="tooltip" for="RemoveRow">Remove Row Regex <span class="icon">&#9432</span>
+                                    <span class="tooltipText">Regular expression that matches the name of rows to be removed</span>
+                                </label>
+                            </div>
+                            <div class="enter">
+                                <input type="text" name="RemoveRow" id="RemoveRow" value="(?i)No compounds found for experimental mass">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">
+                                <label class="tooltip" for="Separator">Separator <span class="icon">&#9432</span>
+                                    <span class="tooltipText">Regular expression that matches the character used to separate compound names in the same row</span>
+                                </label>
+                            </div>
+                            <div class="enter">
+                                <input type="text" name="Separator" id="Separator" value="\s/\s">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">
+                                <label class="tooltip" for="AminoAcidSeparator">Aminoacid Separator <span class="icon">&#9432</span>
+                                    <span class="tooltipText">Regular expression that matches the character used to separate aminoacid in peptides</span>
+                                </label>
+                            </div>
+                            <div class="enter">
+                                <input type="text" name="AminoAcidSeparator" id="AminoAcidSeparator" value="\s">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">
+                                <label for="Mod_OutputName">Output name</label>
+                            </div>
+                            <div class="enter">
+                                <input type="text" name="Mod_OutputName" id="Mod_OutputName" placeholder="Optional">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label">
+                                <label for="Mod_OutputColumns">Output columns</label>
+                            </div>
+                            <div class="enter">
+                                <input type="text" name="Mod_OutputColumns" id="Mod_OutputColumns" placeholder="Optional">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formModule" id="formTable">
+                    <h3>Table settings</h3>
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="ComparedColumns">Compared columns (Index/Name) <span class="icon">&#9432</span>
+                                <span class="tooltipText">Name of columns compared among rows</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="ComparedColumns" id="ComparedColumns" placeholder="Default: 1, 3, 4, 5, 7, 8, 9">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="ConservedColumns">Conserved columns (Index/Name) <span class="icon">&#9432</span>
+                                <span class="tooltipText">Name of columns whose value will be conserved after row merge</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="ConservedColumns" id="ConservedColumns" placeholder="Default: 2, 6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="Table_OutputName">Output name</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Table_OutputName" id="Table_OutputName" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="Table_OutputColumns">Output columns</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Table_OutputColumns" id="Table_OutputColumns" placeholder="Optional">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formModule" id="formFeatureInfo">
+                    <h3>FeatureInfo settings</h3>
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="N_Digits">Decimal places <span class="icon">&#9432</span>
+                                <span class="tooltipText">Number of decimal places to which the experimental mass of the features will be rounded to make the "merge"</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="N_Digits" id="N_Digits" value=4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="FeatureInfo_OutputName">Output name</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="FeatureInfo_OutputName" id="FeatureInfo_OutputName" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="FeatureInfo_OutputColumns">Output columns</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="FeatureInfo_OutputColumns" id="FeatureInfo_OutputColumns" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="FeatureInfo_file">Feature info file</label>
+                        </div>
+                        <div class="enter" style="width:35%;">
+                            <input type="file" name="FeatureInfo_file" id="FeatureInfo_file" form="myForm">
+                        </div>
+                        <div style="float: left; margin-top:5px; padding: 6px;">
+                            <a href="assets/files/FeatureInfo.xlsx" download="Example.xlsx" style="text-decoration: none; color: darkblue;">Download example file</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formModule">
+                    <div id="send">
+                        <button type="button" name="submit" onclick="sendJob()">TurboPutative</button>
+                        <p id="errorFile" style="display: none; color: red;"></p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -457,7 +535,7 @@
                 var fileInput = document.getElementById('inputFile');
                 
                 if (fileInput.files[0] === undefined) {
-                    errorSite.innerHTML = "Please, upload input file";
+                    errorSite.innerHTML = "Please, upload an input file";
                     document.getElementById("errorFile").style.display = 'block';
                     return 1;
                 }
@@ -499,6 +577,7 @@
                 TaggerJSON['Drug'] = "";
                 TaggerJSON['MicrobialCompound'] = "";
                 TaggerJSON['Halogenated'] = "";
+                TaggerJSON['NaturalProduct'] = "";
 
                 if(document.getElementById("Food").checked == true) {
                     TaggerJSON['Food'] = "True";
@@ -516,6 +595,10 @@
                     TaggerJSON['Halogenated'] = "True";
                 }
 
+                if(document.getElementById("NaturalProduct").checked == true) {
+                    TaggerJSON['NaturalProduct'] = "True";
+                }
+
                 // Convert JSON into an string with INI format
                 iniContent = "[TagSelection]"
                 iniContent += "###";
@@ -526,6 +609,8 @@
                 iniContent += "MicrobialCompound = " + TaggerJSON['MicrobialCompound'];
                 iniContent += "###";
                 iniContent += "Halogenated = " + TaggerJSON['Halogenated'];
+                iniContent += "###";
+                iniContent += "NaturalProduct = " + TaggerJSON['NaturalProduct'];
                 iniContent += "###";
 
                 iniContent += "[Parameters]";
