@@ -12,16 +12,32 @@ body {
 
 /* Style Header */
 .header {
-    padding: 10px 30px;
+    /*padding: 10px 30px;*/
+    margin-top: 10px;
+    height: 120px;
+    padding: 0;
     text-align: center;
     background-color: #ffffff;
     background-image: url("../../images/header.jpg");
     background-size: cover;
-    color: #222;
+}
+
+.header a {
+    display: block;
+    text-decoration: none;
+    /*border: 1px solid transparent;*/
+    margin: 0;
+    height: 120px;
+    padding-top: 1px;
 }
 
 .header h1 {
     font-size: 50px;
+    color: #222
+}
+
+.header:hover {
+    opacity: 0.95;
 }
 
 /* Style top navigation bar*/
