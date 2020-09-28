@@ -1,162 +1,168 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TurboPutative</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link href="assets/css/main.css" type="text/css" rel="stylesheet">
-        <link href="../assets/css/main.css" type="text/css" rel="stylesheet">
+<head>
+    <title>TurboPutative</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="assets/css/main.css" type="text/css" rel="stylesheet">
+    <link href="../assets/css/main.css" type="text/css" rel="stylesheet">
 
-        <style>
-            .waitContainer {
-                margin-top: 10px;
-                display: grid;
-                grid-template-rows: auto auto auto;
-                grid-row-gap: 10px;
-                padding: 0 30px 30px 20px;
-                
-                background-color: white;
+    <style>
+        .waitContainer {
+            margin-top: 10px;
+            display: grid;
+            grid-template-rows: auto auto auto;
+            grid-row-gap: 10px;
+            padding: 0 30px 30px 20px;
+            
+            background-color: white;
+        }
+
+        #mainMessage {
+            text-align: center;
+        }
+
+        #tableData {
+            border-collapse: collapse;
+            margin-left: 25%;
+            width: 50%;
+        }
+
+        #tableData td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #tableData tr:nth-child(odd){
+            background-color: #f2f2f2;
+        }
+
+        .field {
+            width: 50%;
+            font-weight: bold;
+        }
+
+        .data {
+            width: 50%;
+        }
+
+        #updateMessage {
+            text-align: center;
+            font-size: 1em;
+        }
+
+        #containerDownload {
+            background-color: white;
+            padding: 5px 0 50px 0;
+            text-align: center;
+        }
+
+        #containerDownload a {
+            margin: auto;
+            width: 170px;
+            height: 50px;
+            padding: 14px 0;
+            display: block;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 1.2em;
+            color: white;
+            background-color: #4CAF50;
             }
 
-            #mainMessage {
-                text-align: center;
+            #containerDownload a:hover {
+                background-color: #204922;
             }
 
-            #tableData {
-                border-collapse: collapse;
-                margin-left: 25%;
-                width: 50%;
-            }
+    </style>
+</head>
 
-            #tableData td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-            }
+<body>
+    <!-- Header-->
+    <div class="header">
+        <!--<div style="float:left;">
+            <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
+        </div> -->
+        <a href="index.html">
+            <h1>MAPPA</h1>
+            <h2>Automatic Processing of Putative Annotations for Metabolomic Analysis</h2>
+        </a>
+    </div>
 
-            #tableData tr:nth-child(odd){
-                background-color: #f2f2f2;
-            }
+    <!-- Navigation bar -->
+    <ul class="nav">
+        <li class="navItem"><a href="index.html">Home</a></li>
+        <li class="navItem dropDown">
+            <a href="javascript:void(0)" class="dropDownBtn">Help</a>
+            <div class="dropDownContent">
+                <a href="modules.html">Modules</a>
+                <a href='settings.html'>Settings</a>
+            </div>
+        </li>
+        <li class="active" class="navItem"><a href="turboputative.html">Execute</a></li>
+        <li class="navItem"><a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a></li>
+        <li class="navItem"><a href="#">Contact us</a></li>
+    </ul>
 
-            .field {
-                width: 50%;
-                font-weight: bold;
-            }
+    <div class="waitContainer">
+        <div id="mainMessage">
+            <h3>Your request is being processed</h3>
+        </div>
+        <div class="tableDataContainer">
+            <table id="tableData">
+                <tr>
+                    <td class="field">Request ID</td>
+                    <td class="data" id="jobID"></td>
+                </tr>
+                <tr>
+                    <td class="field">Status</td>
+                    <td class="data" id="jobStatus"></td>
+                </tr>
+                <tr>
+                    <td class="field">Time since submission</td>
+                    <td class="data" id="jobTime">00:00:00</td>
+                </tr>
+            </table>
+        </div>
+        <div id="updateMessage">
+            <p>This page will be automatically updated in 5 seconds until processing is done</p>
+        </div>
+    </div>
 
-            .data {
-                width: 50%;
-            }
-
-            #updateMessage {
-                text-align: center;
-                font-size: 1em;
-            }
-
-            #containerDownload {
-                background-color: white;
-                padding: 5px 0 50px 0;
-                text-align: center;
-            }
-
-            #containerDownload a {
-                margin: auto;
-                width: 170px;
-                height: 50px;
-                padding: 14px 0;
-                display: block;
-                border-radius: 4px;
-                text-decoration: none;
-                font-size: 1.2em;
-                color: white;
-                background-color: #4CAF50;
-                }
-
-                #containerDownload a:hover {
-                    background-color: #204922;
-                }
-
-        </style>
-    </head>
-
-    <body>
-        <!-- Header-->
-        <div class="header">
-            <!--<div style="float:left;">
-                <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
-            </div> -->
-            <a href="index.html">
-                <h1>TurboPutative</h1>
+    <!-- Hidden Download link -->
+    <div id="containerDownload" style="display: none;">
+        
+            <a  href="###INSERT_ZIP_PATH###" download="TurboPutative.zip">
+                Download results
             </a>
+        
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footText">
+            <p><a href="https://www.cnic.es/en" target="_blank">Spanish National Center for Cardiovascular Research</a></p>
+            <p>Cardiovascular Proteomics Laboratory</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
         </div>
+    </div>
 
-        <!-- Navigation bar -->
-        <div class="nav">
-            <a href="../index.html">Home</a>
-            <a href="../modules.html">Modules</a>
-            <a href="../settings.html">Settings</a>
-            <a href="../turboputative.html">TurboPutative</a>
-            <a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a>
-        </div>
+    <script>
 
-        <div class="waitContainer">
-            <div id="mainMessage">
-                <h3>Your request is being processed</h3>
-            </div>
-            <div class="tableDataContainer">
-                <table id="tableData">
-                    <tr>
-                        <td class="field">Request ID</td>
-                        <td class="data" id="jobID"></td>
-                    </tr>
-                    <tr>
-                        <td class="field">Status</td>
-                        <td class="data" id="jobStatus"></td>
-                    </tr>
-                    <tr>
-                        <td class="field">Time since submission</td>
-                        <td class="data" id="jobTime">00:00:00</td>
-                    </tr>
-                </table>
-            </div>
-            <div id="updateMessage">
-                <p>This page will be automatically updated in 5 seconds until processing is done</p>
-            </div>
-        </div>
+        var jobID = '###INSERT_JOB_ID###';
+        var jobStatus = '###INSER_JOB_STATUS###';
+        var reloadTime = 5000
+        
+        document.getElementById("jobID").innerHTML = jobID;
+        document.getElementById("jobStatus").innerHTML = jobStatus;
+        
+        //###INSERT_DISPLAY_containerDownload###
 
-        <!-- Hidden Download link -->
-        <div id="containerDownload" style="display: none;">
-            
-                <a  href="###INSERT_ZIP_PATH###" download="TurboPutative.zip">
-                    Download results
-                </a>
-            
-        </div>
+        setTimeout(function(){window.location.pathname='turboputative.html/'+jobID}, 1000)
+        setTimeout(function(){location.reload()}, reloadTime)
 
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footText">
-                <p><a href="https://www.cnic.es/en" target="_blank">Spanish National Center for Cardiovascular Research</a></p>
-                <p>Cardiovascular Proteomics Laboratory</p>
-                <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
-            </div>
-        </div>
+    </script>
 
-        <script>
-
-            var jobID = '###INSERT_JOB_ID###';
-            var jobStatus = '###INSER_JOB_STATUS###';
-            var reloadTime = 5000
-            
-            document.getElementById("jobID").innerHTML = jobID;
-            document.getElementById("jobStatus").innerHTML = jobStatus;
-            
-            //###INSERT_DISPLAY_containerDownload###
-
-            setTimeout(function(){window.location.pathname='turboputative.html/'+jobID}, 1000)
-            setTimeout(function(){location.reload()}, reloadTime)
-
-        </script>
-
-    </body>
-
+</body>
 </html>

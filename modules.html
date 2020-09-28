@@ -32,7 +32,7 @@
             color: darkblue;
         }
 
-        li {
+        .list li {
             margin-top: 10px;
         }
 
@@ -72,18 +72,25 @@
             <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
         </div> -->
         <a href="index.html">
-            <h1>TurboPutative</h1>
+            <h1>MAPPA</h1>
+            <h2>Automatic Processing of Putative Annotations for Metabolomic Analysis</h2>
         </a>
     </div>
 
     <!-- Navigation bar -->
-    <div class="nav">
-        <a href="index.html">Home</a>
-        <a class="active" href="modules.html">Modules</a>
-        <a href='settings.html'>Settings</a>
-        <a href="turboputative.html">TurboPutative</a>
-        <a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a>
-    </div>
+    <ul class="nav">
+        <li class="navItem"><a href="index.html">Home</a></li>
+        <li class="navItem dropDown">
+            <a class="active" href="javascript:void(0)" class="dropDownBtn">Help</a>
+            <div class="dropDownContent">
+                <a href="modules.html">Modules</a>
+                <a href='settings.html'>Settings</a>
+            </div>
+        </li>
+        <li class="navItem"><a href="turboputative.html">Execute</a></li>
+        <li class="navItem"><a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a></li>
+        <li class="navItem"><a href="#">Contact us</a></li>
+    </ul>
 
     <!-- Text -->
     <div class="main">
@@ -97,7 +104,7 @@
                     food, natural products or of microbial origin. For this purpose, Tagger uses the following 
                     <a class=dataLink href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow/tree/master/Data" target="_blank">four lists</a>:
 
-                    <ul style="line-height: 1.5; text-align:justify;">
+                    <ul class="list" style="line-height: 1.5; text-align:justify;">
                         <li><b>drug_database.tsv</b>: List of compounds extracted from the <a class="dataLink" href="https://hmdb.ca/" target="_blank">
                             Human Metabolome Database (HMDB)</a>, 
                             and which according to their ontology are considered as "Drug" or "Pharmaceutical Industry", 
