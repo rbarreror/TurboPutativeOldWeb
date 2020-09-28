@@ -29,11 +29,18 @@ body {
     margin: 0;
     height: 120px;
     padding-top: 1px;
+    color: #222
 }
 
 .header h1 {
     font-size: 50px;
-    color: #222
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.header h2 {
+    margin-top: 0;
+    font-size: 25px;
 }
 
 .header:hover {
@@ -42,17 +49,42 @@ body {
 
 /* Style top navigation bar*/
 .nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
     overflow: hidden;
     background-color: #333;
 }
 
-.nav a {
+.nav > li {
     float: left;
-    display: block;
+}
+
+.navItem a {
+    display: inline-block;
     color: white;
+    text-decoration: none;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+}
+
+.dropDownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+.dropDownContent a {
+    display: block;
+    color: black;
+    text-align: left;
+}
+
+.dropDown:hover .dropDownContent {
+    display: block;
 }
 
 .nav a:hover:not(.active) {
@@ -64,6 +96,7 @@ a.active {
     background-color: black;
     color: white;
 }
+
 
 /* Footer */
 .footer {
