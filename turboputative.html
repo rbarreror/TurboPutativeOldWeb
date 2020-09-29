@@ -223,10 +223,10 @@
         <div class="selector" id="selector">
             <h2>Select the modules in order of execution</h2>
             <div class="modules">
-                <button class="button" onclick="clickMod(this)">Tagger</button>
-                <button class="button" onclick="clickMod(this)">REname</button>
-                <button class="button" onclick="clickMod(this)">RowMerger</button>
-                <button class="button" onclick="clickMod(this)">TableMerger</button>
+                <button id="Tagger" class="button" onclick="clickMod(this)">Tagger</button>
+                <button id="Mod" class="button" onclick="clickMod(this)">REname</button>
+                <button id="Table" class="button" onclick="clickMod(this)">RowMerger</button>
+                <button id="FeatureInfo" class="button" onclick="clickMod(this)">TableMerger</button>
             </div>
             <div id="selected"></div>
             <div id=other>
@@ -492,10 +492,10 @@
             element.style.backgroundColor = "#204922";
             selected = document.getElementById("selected");
 
-            modulePos = selectionObj[element.innerHTML];
+            modulePos = selectionObj[element.id];
             if (modulePos == 0){
                 counter += 1;
-                selectionObj[element.innerHTML] = counter;
+                selectionObj[element.id] = counter;
                 selected.innerHTML = selected.innerHTML + element.innerHTML + " > ";
             }
 
