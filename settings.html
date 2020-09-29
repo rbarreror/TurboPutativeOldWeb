@@ -52,7 +52,7 @@
             <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
         </div> -->
         <a href="index.html">
-            <h1>MAPPA</h1>
+            <h1>MAPPAlysis</h1>
             <h2>Automatic Processing of Putative Annotations for Metabolomic Analysis</h2>
         </a>
     </div>
@@ -95,10 +95,10 @@
                 <ul class="list" style="line-height: 1.5; text-align:justify;">
                     <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the input file with a prefix:</li>
                     <ul class="list">
-                        <li>Putative Tagger: "tagged_"</li>
-                        <li>Putative Mod: "mod_"</li>
-                        <li>Putative Table: "table_"</li>
-                        <li>Putative Feature Info: "id_"</li>
+                        <li>Tagger: "Tagged_"</li>
+                        <li>REname: "REnamed_"</li>
+                        <li>RowMerger: "RowMerged_"</li>
+                        <li>TableMerger: "Tmerged_"</li>
                     </ul>
                     
                     <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
@@ -132,9 +132,9 @@
             </div>
             <br>
             <div id="Mod" style="border-top:1px solid lightgrey">
-                <h2>Mod Settings</h2>
+                <h2>REname Settings</h2>
                 <p class="text">
-                    Putative Mod parses the name of the candidate metabolites. The configurable parameters in this module are the following:<br>
+                    REname parses the name of the candidate metabolites. The configurable parameters in this module are the following:<br>
                     <ul class=list style="line-height: 1.5; text-align: justify;">
                         <li><b>Separator</b>: Regular expression that matches the character string used to separate compound names in the same row.</li>
                         <li><b>AminoAcidSeparator</b>: The table with the putative identifications may contain peptides. TurboPutative is capable of 
@@ -148,7 +148,7 @@
             </div>
             <br>
             <div id="Table" style="border-top:1px solid lightgrey">
-                <h2>Table Settings</h2>
+                <h2>RowMerger Settings</h2>
                 <p class="text">
                     The module allows to combine rows that have the same value for certain columns. Therefore, the configurable parameters are:<br>
                     <ul class=list style="line-height: 1.5; text-align: justify;">
@@ -160,7 +160,7 @@
                 </p>
             </div>
             <br>
-            <div id="FeatureInfo" style="border-top:1px solid lightgrey">
+            <div id="TableMerger" style="border-top:1px solid lightgrey">
                 <h2>FeatureInfo Settings</h2>
                 <p class="text">
                     This tool merges the identification table with another table containing additional information

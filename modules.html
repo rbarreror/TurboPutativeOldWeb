@@ -72,7 +72,7 @@
             <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
         </div> -->
         <a href="index.html">
-            <h1>MAPPA</h1>
+            <h1>MAPPAlysis</h1>
             <h2>Automatic Processing of Putative Annotations for Metabolomic Analysis</h2>
         </a>
     </div>
@@ -98,7 +98,7 @@
             <h1>Modules</h1>
             <hr/>
             <div id="Tagger">
-                <h2>1 - Putative Tagger</h2>
+                <h2>1 - Tagger</h2>
                 <p class="text">
                     The Tagger module checks if the candidate metabolites contained in the input table are considered to be drug, 
                     food, natural products or of microbial origin. For this purpose, Tagger uses the following 
@@ -185,12 +185,13 @@
             </div>
             <br>
             <div id="Mod">
-                <h2>2 - Putative Mod</h2>
+                <h2>2 - REname</h2>
                 <p class="text">
                     The putative annotations are done by comparing the molecular weight of the "feature" with that of the 
                     metabolites contained in the databases. For this reason, the same "feature" can have multiple candidate 
                     metabolites annotated, which in many cases are isomers (or acid/salt forms), and which appear as different 
-                    rows in the tables with the putative annotations. Putative Mod parses the name of the candidate metabolites 
+                    rows in the tables with the putative annotations. REname (<u>R</u>egular <u>E</u>xpressions processing of compound <u>name</u>s) 
+                    parses the name of the candidate metabolites 
                     to eliminate the information related to the isomer (or convert all the acid forms into salt), and combine 
                     the rows of the table with isomeric metabolites assigned to the same "feature". The processing of the name 
                     of the compounds is done using the <a class="dataLink" href="https://github.com/lifs-tools/goslin" target="_blank">Goslin</a> 
@@ -270,9 +271,9 @@
             </div>
             <br>
             <div id="Table">
-                <h2>3 - Putative Table</h2>
+                <h2>3 - RowMerger</h2>
                 <p class="text">
-                    The Putative Table tool allows you to simplify the table with the putative annotations, 
+                    The RowMerger tool allows you to simplify the table with the putative annotations, 
                     combining those rows that have the same value for certain columns. The user can select 
                     the columns that will be taken into account for merging, as well as the columns whose 
                     values will be kept in the resulting rows.<br>
@@ -330,7 +331,7 @@
                         </tr>
                     </table>
                     <br>
-                    The result of Putative Table would be:<br>
+                    The result of RowMerger would be:<br>
                     <br>
                     <table class="msTable">
                         <tr>
@@ -373,7 +374,7 @@
             </div>
             <br>
             <div id="Putative FeatureInfo">
-                <h2>4 - Putative FeatureInfo</h2>
+                <h2>4 - TableMerger</h2>
                 <p class="text">
                     This last tool allows adding to the table with the putative identifications additional information 
                     of the "features" contained in another table (e.g. ID or retention time). The "merge" between both 

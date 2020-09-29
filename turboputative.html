@@ -198,7 +198,7 @@
             <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
         </div> -->
         <a href="index.html">
-            <h1>MAPPA</h1>
+            <h1>MAPPAlysis</h1>
             <h2>Automatic Processing of Putative Annotations for Metabolomic Analysis</h2>
         </a>
     </div>
@@ -224,9 +224,9 @@
             <h2>Select the modules in order of execution</h2>
             <div class="modules">
                 <button class="button" onclick="clickMod(this)">Tagger</button>
-                <button class="button" onclick="clickMod(this)">Mod</button>
-                <button class="button" onclick="clickMod(this)">Table</button>
-                <button class="button" onclick="clickMod(this)">FeatureInfo</button>
+                <button class="button" onclick="clickMod(this)">REname</button>
+                <button class="button" onclick="clickMod(this)">RowMerger</button>
+                <button class="button" onclick="clickMod(this)">TableMerger</button>
             </div>
             <div id="selected"></div>
             <div id=other>
@@ -330,7 +330,7 @@
             </div>
 
             <div class="formModule" id="formMod">
-                <h3>Mod settings</h3>
+                <h3>REname settings</h3>
                 <div class="ModParam">
                     <div class="row">
                         <div class="label">
@@ -382,7 +382,7 @@
             </div>
 
             <div class="formModule" id="formTable">
-                <h3>Table settings</h3>
+                <h3>RowMerger settings</h3>
                 <div class="row">
                     <div class="label">
                         <label class="tooltip" for="ComparedColumns">Compared columns (Index/Name) <span class="icon">&#9432</span>
@@ -422,7 +422,7 @@
             </div>
 
             <div class="formModule" id="formFeatureInfo">
-                <h3>FeatureInfo settings</h3>
+                <h3>TableMerger settings</h3>
                 <div class="row">
                     <div class="label">
                         <label class="tooltip" for="N_Digits">Decimal places <span class="icon">&#9432</span>
