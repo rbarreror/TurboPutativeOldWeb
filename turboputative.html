@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link href="assets/css/main.css" type="text/css" rel="stylesheet">
+    <script src="assets/js/iniStringMaker.js"></script>
     <style>
 
         /* Style main */
@@ -155,7 +156,13 @@
         .enter {
             float: left;
             width: 75%;
-            margin-top: 6px;
+            margin-top: 12px;
+        }
+
+        .exampleFile {
+            float: left;
+            margin-top: 10px;
+            padding: 6px;
         }
 
         .row:after {
@@ -232,6 +239,7 @@
             <div id=other>
                 <button class="reset" onclick="window.location.href='turboputative.html'" style="cursor: pointer;">Reset</button>
                 <button class="continue" onclick="showForm()" style="cursor: pointer;">Continue</button>
+                <p id="errorSelection" style="display: none; color: red;"></p>
             </div>
         </div>
     </div>
@@ -255,7 +263,7 @@
                         <div class="enter" style="width:35%;">
                             <input type="file" name="inputFile" id="inputFile">
                         </div>
-                        <div style="float: left; margin-top:5px; padding: 6px;">
+                        <div class="exampleFile">
                             <a href="assets/files/MS_experiment.xls" download="Example_Input.xls" style="text-decoration: none; color: darkblue;">Download example file</a>
                         </div>
                     </div>
@@ -378,6 +386,18 @@
                             <input type="text" name="Mod_OutputColumns" id="Mod_OutputColumns" placeholder="Optional">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="regexINI">Regular Expressions file (optional)</label>
+                        </div>
+                        <div class="enter" style="width:35%;">
+                            <input type="file" name="regexINI" id="regexINI" form="myForm">
+                        </div>
+                        <div class="exampleFile">
+                            <a href="assets/files/regex.ini" download="Example_regexINI.ini" style="text-decoration: none; color: darkblue;">Download example file</a>
+                        </div>
+                    </div>
+                    <p id="errorINIFormat" style="display: none; color: red; margin-left:25%;"></p>
                 </div>
             </div>
 
@@ -456,7 +476,7 @@
                     <div class="enter" style="width:35%;">
                         <input type="file" name="FeatureInfo_file" id="FeatureInfo_file" form="myForm">
                     </div>
-                    <div style="float: left; margin-top:5px; padding: 6px;">
+                    <div class="exampleFile">
                         <a href="assets/files/FeatureInfo.xlsx" download="Example_FeatInfo.xlsx" style="text-decoration: none; color: darkblue;">Download example file</a>
                     </div>
                 </div>
@@ -480,7 +500,7 @@
         </div>
     </div>
 
-
+    <script src="assets/js/regexINIFormat.js"></script>
     <script>
 
         var selectionObj = {Tagger: 0, Mod: 0, Table: 0, FeatureInfo: 0};
@@ -488,6 +508,8 @@
 
         function clickMod(element) {
             
+            // Remove error message if present
+            document.getElementById("errorSelection").style.display = "none"
 
             element.style.backgroundColor = "#204922";
             selected = document.getElementById("selected");
@@ -504,6 +526,14 @@
         
 
         function showForm() {
+
+            // if no module was selected, throw error message
+            if (counter == 0) {
+                document.getElementById("errorSelection").style.display = "block"
+                document.getElementById("errorSelection").innerHTML = "Please, select at least one module."
+                return 1
+            }
+
             document.getElementById("form").style.display = "block";
             var workflow = ["", "", "", ""];
             var moduleToNum = {Tagger: 1, Mod: 2, Table: 3, FeatureInfo: 4};
@@ -538,201 +568,49 @@
 
         function sendJob() {
 
+            // Assert that files were uploaded
             var errorSite = document.getElementById('errorFile');
             var fileInput = document.getElementById('inputFile');
-            
+            var fileFeatInfo = document.getElementById('FeatureInfo_file')
+
+            // Assert input file always
             if (fileInput.files[0] === undefined) {
                 errorSite.innerHTML = "Please, upload an input file";
                 document.getElementById("errorFile").style.display = 'block';
                 return 1;
             }
 
-            if (counter == 0) {
-                errorSite.innerHTML = "Please, select one module at least";
+            // Assert Feature Info file only when 4th module was selected
+            if (fileFeatInfo.files[0] === undefined && document.getElementById("workflow").value.search('4') != -1) {
+                errorSite.innerHTML = "Please, upload an Feature info file";
                 document.getElementById("errorFile").style.display = 'block';
                 return 1;
             }
+
+            // Assert that regex.ini format is correct (if Mod module was selected)
+            if (INIformat == 1 && document.getElementById("workflow").value.search('2') != -1) {
+                //console.log(sectionCounter);
+                errorSite.innerHTML = `Format error in Regular Expressions file at line ${lineError}`;
+                document.getElementById("errorFile").style.display = 'block';
+                return 1;
+            }
+        
+            // errorSite.innerHTML = "Enviado";
+            // document.getElementById("errorFile").style.display = 'block';
+            // return 1;
 
             document.getElementById("TaggerParams").value = iniTagger();
             document.getElementById("ModParams").value = iniMod();
             document.getElementById("TableParams").value = iniTable();
             document.getElementById("FeatureInfoParams").value = iniFeatureInfo();
-
-            // console.log(document.getElementById("TaggerParams").value);
+            
             document.getElementById("mySubmit").click();
         }
 
 
-        function iniTagger() {
-
-            // Create JSON containing all Tagger parameters
-            var TaggerJSON = {};
-
-            // Get output name. Default or the given by the user
-            if (document.getElementById("Tagger_OutputName").value == ""){
-                var fileInput = document.getElementById('inputFile');
-                var outfile = "tagged_" + fileInput.files[0].name;
-            } else {
-                var outfile = document.getElementById("Tagger_OutputName").value;
-            }
-
-            TaggerJSON['OutputName'] = outfile; 
-
-            TaggerJSON['HalogenatedRegex'] = document.getElementById("HalogenatedRegex").value;
-            TaggerJSON['OutputColumns'] = document.getElementById("Tagger_OutputColumns").value
-            TaggerJSON['Food'] = "";
-            TaggerJSON['Drug'] = "";
-            TaggerJSON['MicrobialCompound'] = "";
-            TaggerJSON['Halogenated'] = "";
-            TaggerJSON['NaturalProduct'] = "";
-
-            if(document.getElementById("Food").checked == true) {
-                TaggerJSON['Food'] = "True";
-            }
-
-            if(document.getElementById("Drug").checked == true) {
-                TaggerJSON['Drug'] = "True";
-            }
-
-            if(document.getElementById("MicrobialCompound").checked == true) {
-                TaggerJSON['MicrobialCompound'] = "True";
-            }
-
-            if(document.getElementById("Halogenated").checked == true) {
-                TaggerJSON['Halogenated'] = "True";
-            }
-
-            if(document.getElementById("NaturalProduct").checked == true) {
-                TaggerJSON['NaturalProduct'] = "True";
-            }
-
-            // Convert JSON into an string with INI format
-            iniContent = "[TagSelection]"
-            iniContent += "###";
-            iniContent += "Food = " + TaggerJSON['Food'];
-            iniContent += "###";
-            iniContent += "Drug = " + TaggerJSON['Drug'];
-            iniContent += "###";
-            iniContent += "MicrobialCompound = " + TaggerJSON['MicrobialCompound'];
-            iniContent += "###";
-            iniContent += "Halogenated = " + TaggerJSON['Halogenated'];
-            iniContent += "###";
-            iniContent += "NaturalProduct = " + TaggerJSON['NaturalProduct'];
-            iniContent += "###";
-
-            iniContent += "[Parameters]";
-            iniContent += "###";
-            iniContent += "OutputName = " + TaggerJSON['OutputName'];
-            iniContent += "###";
-            iniContent += "OutputColumns = " + TaggerJSON['OutputColumns'];
-            iniContent += "###";
-            iniContent += "HalogenatedRegex = " + TaggerJSON['HalogenatedRegex'];
-
-            return iniContent
-        }
-
-        function iniMod() {
-
-            // Create JSON containing all Mod parameters
-            var ModJSON = {};
-
-            // Get output name. Default or the given by the user
-            if (document.getElementById("Mod_OutputName").value == ""){
-                var fileInput = document.getElementById('inputFile');   
-                var outfile = "mod_" + fileInput.files[0].name;
-            } else {
-                var outfile = document.getElementById("Mod_OutputName").value;
-            }
-
-            ModJSON['OutputName'] = outfile; 
-
-            ModJSON['OutputColumns'] = document.getElementById("Mod_OutputColumns").value;
-            ModJSON['RemoveRow'] = document.getElementById("RemoveRow").value;
-            ModJSON['Separator'] = document.getElementById("Separator").value;
-            ModJSON['AminoAcidSeparator'] = document.getElementById("AminoAcidSeparator").value;
-
-            // Convert JSON into an string with INI format
-            iniContent = "[Parameters]";
-            iniContent += "###";
-            iniContent += "OutputName = " + ModJSON['OutputName'];
-            iniContent += "###";
-            iniContent += "OutputColumns = " + ModJSON['OutputColumns'];
-            iniContent += "###";
-            iniContent += "Separator = " + ModJSON['Separator'];
-            iniContent += "###";
-            iniContent += "AminoAcidSeparator = " + ModJSON['AminoAcidSeparator'];
-            iniContent += "###";
-            iniContent += "RemoveRow = " + ModJSON['RemoveRow'];
-
-            return iniContent
-        }
-
-        function iniTable() {
-
-            // Create JSON containing all Table parameters
-            var TableJSON = {};
-    
-            // Get output name. Default or the given by the user
-            if (document.getElementById("Table_OutputName").value == ""){
-                var fileInput = document.getElementById('inputFile');   
-                var outfile = "table_" + fileInput.files[0].name;
-            } else {
-                var outfile = document.getElementById("Table_OutputName").value;
-            }
-
-            TableJSON['OutputName'] = outfile; 
-
-            TableJSON['OutputColumns'] = document.getElementById("Table_OutputColumns").value;
-            TableJSON['ComparedColumns'] = document.getElementById("ComparedColumns").value;
-            TableJSON['ConservedColumns'] = document.getElementById("ConservedColumns").value;
-            
-
-            // Convert JSON into an string with INI format
-            iniContent = "[Parameters]";
-            iniContent += "###";
-            iniContent += "OutputName = " + TableJSON['OutputName'];
-            iniContent += "###";
-            iniContent += "OutputColumns = " + TableJSON['OutputColumns'];
-            iniContent += "###";
-            iniContent += "ComparedColumns = " + TableJSON['ComparedColumns'];
-            iniContent += "###";
-            iniContent += "ConservedColumns = " + TableJSON['ConservedColumns'];
-
-            return iniContent
-        }
-
-
-        function iniFeatureInfo() {
-
-            // Create JSON containing all Table parameters
-            var FeatureInfoJSON = {};
-
-            // Get output name. Default or the given by the user
-            if (document.getElementById("FeatureInfo_OutputName").value == ""){
-                var fileInput = document.getElementById('inputFile');   
-                var outfile = "info_" + fileInput.files[0].name;
-            } else {
-                var outfile = document.getElementById("FeatureInfo_OutputName").value;
-            }
-
-            FeatureInfoJSON['OutputName'] = outfile; 
-
-            FeatureInfoJSON['OutputColumns'] = document.getElementById("FeatureInfo_OutputColumns").value;
-            FeatureInfoJSON['N_Digits'] = document.getElementById("N_Digits").value;
-            
-            // Convert JSON into an string with INI format
-            iniContent = "[Parameters]";
-            iniContent += "###";
-            iniContent += "OutputName = " + FeatureInfoJSON['OutputName'];
-            iniContent += "###";
-            iniContent += "OutputColumns = " + FeatureInfoJSON['OutputColumns'];
-            iniContent += "###";
-            iniContent += "N_Digits = " + FeatureInfoJSON['N_Digits'];
-
-            return iniContent
-        }
-
     </script>
+
+
 
 </body>
 </html>
